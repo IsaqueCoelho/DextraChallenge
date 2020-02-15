@@ -24,7 +24,6 @@ import dev.dextra.newsapp.feature.sources.adapter.SourcesListAdapter
 import kotlinx.android.synthetic.main.activity_sources.*
 import org.koin.android.ext.android.inject
 
-
 class SourcesActivity : BaseListActivity(), SourcesListAdapter.SourceListAdapterItemListener {
 
     override val emptyStateTitle: Int = R.string.empty_state_title_source

@@ -48,7 +48,7 @@ abstract class BaseListActivity : AppCompatActivity() {
 
     private var loadingDialog: Dialog? = null
 
-    fun showLoading(context: Context) {
+    fun showLoading() {
         if (loadingDialog == null) {
             initDialog()
         }
@@ -60,7 +60,7 @@ abstract class BaseListActivity : AppCompatActivity() {
         loadingDialog?.apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             setCancelable(false)
-            window.setBackgroundDrawableResource(android.R.color.transparent)
+            window?.setBackgroundDrawableResource(android.R.color.transparent)
             setContentView(R.layout.dialog_loading)
         }
     }
@@ -86,7 +86,7 @@ abstract class BaseListActivity : AppCompatActivity() {
 
     protected val networkStateObserver = Observer<NetworkState> { networkState ->
         if (NetworkState.RUNNING == networkState) {
-            showLoading(this)
+            showLoading()
         } else {
             hideLoading()
         }
@@ -111,11 +111,11 @@ abstract class BaseListActivity : AppCompatActivity() {
         }
     }
 
-    fun show(view: View) {
+    private fun show(view: View) {
         view.visibility = VISIBLE
     }
 
-    fun hide(view: View) {
+    private fun hide(view: View) {
         view.visibility = GONE
     }
 
