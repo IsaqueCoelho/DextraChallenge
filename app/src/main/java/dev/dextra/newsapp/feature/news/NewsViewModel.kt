@@ -7,14 +7,12 @@ import dev.dextra.newsapp.api.repository.NewsRepository
 import dev.dextra.newsapp.base.BaseViewModel
 import dev.dextra.newsapp.base.NetworkState
 
-class NewsViewModel(
-    private val newsRepository: NewsRepository
-) : BaseViewModel() {
-
-    private var source: Source? = null
+class NewsViewModel(private val newsRepository: NewsRepository) : BaseViewModel() {
 
     val articles = MutableLiveData<List<Article>>()
     val networkState = MutableLiveData<NetworkState>()
+
+    private var source: Source? = null
 
     fun configureSource(source: Source) {
         this.source = source

@@ -10,11 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.dextra.newsapp.R
 import dev.dextra.newsapp.api.model.Article
 import dev.dextra.newsapp.api.model.Source
-import dev.dextra.newsapp.api.repository.NewsRepository
 import dev.dextra.newsapp.base.BaseListActivity
-import dev.dextra.newsapp.base.repository.EndpointService
 import dev.dextra.newsapp.feature.news.adapter.NewsListAdapter
 import kotlinx.android.synthetic.main.activity_news.*
+import org.koin.android.ext.android.inject
 
 const val NEWS_ACTIVITY_SOURCE = "NEWS_ACTIVITY_SOURCE"
 
@@ -25,9 +24,9 @@ class NewsActivity : BaseListActivity(), NewsListAdapter.NewsListAdapterItemList
     override val errorStateTitle: Int = R.string.error_state_title_news
     override val errorStateSubTitle: Int = R.string.error_state_subtitle_news
     override val mainList: View
-        get() = news_list
+        get() = recyclerview_news
 
-    private val newsViewModel = NewsViewModel(NewsRepository(EndpointService()))
+    private val newsViewModel: NewsViewModel by inject()
 
     private var viewAdapter: NewsListAdapter = NewsListAdapter(this)
     private var viewManager: RecyclerView.LayoutManager = GridLayoutManager(this, 1)
@@ -40,7 +39,6 @@ class NewsActivity : BaseListActivity(), NewsListAdapter.NewsListAdapterItemList
         (intent?.extras?.getSerializable(NEWS_ACTIVITY_SOURCE) as Source).let { source ->
             title = source.name
             this.source = source
-            //loadNews(source)
             loadArticles()
         }
 
