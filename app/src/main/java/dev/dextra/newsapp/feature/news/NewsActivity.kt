@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +27,8 @@ class NewsActivity : BaseListActivity(), NewsListAdapter.NewsListAdapterItemList
     override val mainList: View
         get() = recyclerview_news
 
+    private var page: Int = 1
+
     private val newsViewModel: NewsViewModel by inject()
 
     private var viewAdapter: NewsListAdapter = NewsListAdapter(this)
@@ -39,6 +42,7 @@ class NewsActivity : BaseListActivity(), NewsListAdapter.NewsListAdapterItemList
         (intent?.extras?.getSerializable(NEWS_ACTIVITY_SOURCE) as Source).let { source ->
             title = source.name
             this.source = source
+            newsViewModel.configureSource(source)
             loadArticles()
         }
 
@@ -53,6 +57,25 @@ class NewsActivity : BaseListActivity(), NewsListAdapter.NewsListAdapterItemList
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+        button_previous_page.setOnClickListener {
+            if(page >= 2){
+                page--
+                newsViewModel.loadArticlesList(page)
+            } else {
+                Toast.makeText(this, getString(R.string.error_first_page), Toast.LENGTH_LONG).show()
+            }
+        }
+
+        button_next_page.setOnClickListener {
+            page++
+            newsViewModel.loadArticlesList(page)
+        }
+
+        newsViewModel.formState.observe(this, Observer {
+            stateButtons(it)
+        })
+
     }
 
     override fun setupPortrait() {
@@ -76,9 +99,9 @@ class NewsActivity : BaseListActivity(), NewsListAdapter.NewsListAdapterItemList
     }
 
     private fun loadArticles(){
-        newsViewModel.configureSource(source)
 
         newsViewModel.articles.observe(this, Observer {
+
             viewAdapter.apply {
                 clear()
                 notifyDataSetChanged()
@@ -89,6 +112,12 @@ class NewsActivity : BaseListActivity(), NewsListAdapter.NewsListAdapterItemList
 
         newsViewModel.networkState.observe(this, networkStateObserver)
 
-        newsViewModel.loadArticlesList()
+        newsViewModel.loadArticlesList(page)
     }
+
+    private fun stateButtons(state: Boolean) {
+        button_previous_page.visibility = if(state) View.GONE else View.VISIBLE
+        button_next_page.visibility = if(state) View.GONE else View.VISIBLE
+    }
+
 }

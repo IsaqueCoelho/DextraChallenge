@@ -7,10 +7,9 @@ import dev.dextra.newsapp.feature.sources.SourcesViewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-
 val viewModelModules = module {
     factory { SourcesViewModel(get()) }
-    factory { NewsViewModel(get()) }
+    factory { NewsViewModel(get(), context = get()) }
 }
 
 val serviceModules = module {

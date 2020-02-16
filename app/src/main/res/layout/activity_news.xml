@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,10 +10,35 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_news"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         style="@style/ListStyle"
+        tools:listitem="@layout/item_news"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_news"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/button_next_page"/>
+
+    <Button
+        android:id="@+id/button_previous_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_previous_page"
+        app:layout_constraintTop_toTopOf="@id/button_next_page"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/button_next_page"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/button_next_page"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@id/button_previous_page"
+        app:layout_constraintTop_toBottomOf="@id/recyclerview_news"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <include layout="@layout/empty_state"
         android:layout_width="match_parent"
@@ -26,4 +52,4 @@
         android:layout_marginTop="@dimen/toolbar_safe_distance"
         tools:visibility="gone"/>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

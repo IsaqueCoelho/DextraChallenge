@@ -21,4 +21,8 @@
     <string name="error_state_subtitle_news">We had a problem loading the News list, please check your internet connection and click the button to retry</string>
 
     <string name="error_state_retry">Retry</string>
+
+    <string name="button_previous_page">Previous Page</string>
+    <string name="button_next_page">Next Page</string>
+    <string name="error_first_page">You are in the first page</string>
 </resources>
