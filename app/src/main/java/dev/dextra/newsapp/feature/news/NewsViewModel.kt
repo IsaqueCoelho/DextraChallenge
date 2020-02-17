@@ -32,7 +32,7 @@ class NewsViewModel(private val newsRepository: NewsRepository,
                 articles.postValue(response.articles)
 
                 if(response.articles.isEmpty()){
-                    networkState.postValue(NetworkState.ERROR)
+                    networkState.postValue(NetworkState.EMPTY)
                     formState.postValue(true)
                 } else {
                     networkState.postValue(NetworkState.SUCCESS)
