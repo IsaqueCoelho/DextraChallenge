@@ -1,6 +1,5 @@
 package dev.dextra.newsapp.feature.news
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import dev.dextra.newsapp.api.model.Article
 import dev.dextra.newsapp.api.model.Source
@@ -23,7 +22,7 @@ class NewsViewModel(private val newsRepository: NewsRepository) : BaseViewModel(
     fun loadArticlesList(page: Int){
         networkState.postValue(NetworkState.RUNNING)
         addDisposable(
-            newsRepository.getEverything(source!!.id, page).subscribe({ response ->
+            newsRepository.getEverything(source?.id, page).subscribe({ response ->
                 articles.postValue(response.articles)
 
                 if(response.articles.isEmpty()){
@@ -35,7 +34,6 @@ class NewsViewModel(private val newsRepository: NewsRepository) : BaseViewModel(
                 }
             },
             {
-                Log.e("NewsActivity", "erro: $it")
                 formState.postValue(true)
                 networkState.postValue(NetworkState.ERROR)
             })
