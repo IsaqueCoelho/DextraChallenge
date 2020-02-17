@@ -1,19 +1,14 @@
 package dev.dextra.newsapp.feature.news
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import dev.dextra.newsapp.R
 import dev.dextra.newsapp.api.model.Article
 import dev.dextra.newsapp.api.model.Source
 import dev.dextra.newsapp.api.repository.NewsRepository
 import dev.dextra.newsapp.base.BaseViewModel
 import dev.dextra.newsapp.base.NetworkState
-import kotlin.math.log
 
-class NewsViewModel(private val newsRepository: NewsRepository,
-                    private val context: Context) : BaseViewModel() {
+class NewsViewModel(private val newsRepository: NewsRepository) : BaseViewModel() {
 
     val articles = MutableLiveData<List<Article>>()
     val networkState = MutableLiveData<NetworkState>()

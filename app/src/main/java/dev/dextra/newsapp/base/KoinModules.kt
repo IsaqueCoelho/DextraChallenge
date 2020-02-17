@@ -9,7 +9,7 @@ import org.koin.dsl.module
 
 val viewModelModules = module {
     factory { SourcesViewModel(get()) }
-    factory { NewsViewModel(get(), context = get()) }
+    factory { NewsViewModel(get()) }
 }
 
 val serviceModules = module {
