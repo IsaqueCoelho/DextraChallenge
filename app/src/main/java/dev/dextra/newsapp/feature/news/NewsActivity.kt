@@ -24,7 +24,7 @@ class NewsActivity : BaseListActivity(), NewsListAdapter.NewsListAdapterItemList
     override val emptyStateSubTitle: Int = R.string.empty_state_subtitle_news
     override val errorStateTitle: Int = R.string.error_state_title_news
     override val errorStateSubTitle: Int = R.string.error_state_subtitle_news
-    override val mainList: View
+    override val mainList: RecyclerView
         get() = recyclerview_news
 
     private var page: Int = 1
@@ -39,11 +39,13 @@ class NewsActivity : BaseListActivity(), NewsListAdapter.NewsListAdapterItemList
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_news)
 
-        (intent?.extras?.getSerializable(NEWS_ACTIVITY_SOURCE) as Source).let { source ->
-            title = source.name
-            this.source = source
-            newsViewModel.configureSource(source)
-            loadArticles()
+        if(intent.hasExtra(NEWS_ACTIVITY_SOURCE)){
+            (intent?.extras?.getSerializable(NEWS_ACTIVITY_SOURCE) as Source).let { source ->
+                title = source.name
+                this.source = source
+                newsViewModel.configureSource(source)
+                loadArticles()
+            }
         }
 
         setupView()
@@ -79,11 +81,11 @@ class NewsActivity : BaseListActivity(), NewsListAdapter.NewsListAdapterItemList
     }
 
     override fun setupPortrait() {
-        //not used
+        setListColumns(1)
     }
 
     override fun setupLandscape() {
-        //not used
+        setListColumns(2)
     }
 
     override fun executeRetry() {
@@ -118,6 +120,14 @@ class NewsActivity : BaseListActivity(), NewsListAdapter.NewsListAdapterItemList
     private fun stateButtons(state: Boolean) {
         button_previous_page.visibility = if(state) View.GONE else View.VISIBLE
         button_next_page.visibility = if(state) View.GONE else View.VISIBLE
+    }
+
+    private fun setListColumns(columns: Int) {
+        val layoutManager = recyclerview_news.layoutManager
+        if (layoutManager is GridLayoutManager) {
+            layoutManager.spanCount = columns
+            viewAdapter.notifyDataSetChanged()
+        }
     }
 
 }

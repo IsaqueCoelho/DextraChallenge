@@ -1,7 +1,6 @@
 package dev.dextra.newsapp.base
 
 import android.app.Dialog
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
@@ -10,6 +9,7 @@ import android.view.View.VISIBLE
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import dev.dextra.newsapp.R
 import kotlinx.android.synthetic.main.empty_state.*
 import kotlinx.android.synthetic.main.empty_state.view.*
@@ -22,7 +22,7 @@ abstract class BaseListActivity : AppCompatActivity() {
     abstract val emptyStateSubTitle: Int
     abstract val errorStateTitle: Int
     abstract val errorStateSubTitle: Int
-    abstract val mainList: View
+    abstract val mainList: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

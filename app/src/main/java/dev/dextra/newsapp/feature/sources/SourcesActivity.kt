@@ -3,7 +3,6 @@ package dev.dextra.newsapp.feature.sources
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.LinearLayout
 import android.widget.LinearLayout.HORIZONTAL
@@ -30,7 +29,7 @@ class SourcesActivity : BaseListActivity(), SourcesListAdapter.SourceListAdapter
     override val emptyStateSubTitle: Int = R.string.empty_state_subtitle_source
     override val errorStateTitle: Int = R.string.error_state_title_source
     override val errorStateSubTitle: Int = R.string.error_state_subtitle_source
-    override val mainList: View
+    override val mainList: RecyclerView
         get() = sources_list
 
     private val sourcesViewModel: SourcesViewModel by inject()

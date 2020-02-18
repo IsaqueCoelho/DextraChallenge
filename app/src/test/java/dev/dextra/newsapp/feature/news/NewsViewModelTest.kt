@@ -13,8 +13,6 @@ import org.koin.test.get
 
 class NewsViewModelTest : BaseTest(){
 
-    private val emptyResponse = ArticlesResponse(ArrayList(), "ok", 20)
-
     lateinit var viewModel: NewsViewModel
 
     @Before
@@ -23,7 +21,7 @@ class NewsViewModelTest : BaseTest(){
     }
 
     @Test
-    fun testGetSources() {
+    fun testGetArticles() {
         viewModel.loadArticlesList(1)
 
         assert(viewModel.articles.value?.size == 11)
@@ -35,7 +33,8 @@ class NewsViewModelTest : BaseTest(){
     }
 
     @Test
-    fun testEmptySources() {
+    fun testEmptyArticles() {
+        val emptyResponse = ArticlesResponse(ArrayList(), "ok", 0)
         TestSuite.mock(TestConstants.newsURL).body(JsonUtils.toJson(emptyResponse)).apply()
 
         viewModel.loadArticlesList(1)
@@ -45,7 +44,7 @@ class NewsViewModelTest : BaseTest(){
     }
 
     @Test
-    fun testErrorSources() {
+    fun testErrorArticles() {
         TestSuite.mock(TestConstants.newsURL).throwConnectionError().apply()
 
         viewModel.loadArticlesList(1)
